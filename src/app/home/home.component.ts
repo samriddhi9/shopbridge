@@ -211,48 +211,51 @@ export class HomeComponent implements OnInit {
     this.filteredlist = [];
     this.pagenumbers = []
 
-    options.forEach((element: any) => {
-      this.result = this.productslist.filter(s => (s.name.toLowerCase().includes(element.toLowerCase())) ||
-        (s.price.toLowerCase().includes(element.toLowerCase())) || (s.desc.toLowerCase().includes(element.toLowerCase())));
+    if(options && options.length > 0){
+      options.forEach((element: any) => {
+        this.result = this.productslist.filter(s => (s.name.toLowerCase().includes(element.toLowerCase())) ||
+          (s.price.toLowerCase().includes(element.toLowerCase())) || (s.desc.toLowerCase().includes(element.toLowerCase())));
+  
+        resArr.push(this.result)
+      });
 
-      resArr.push(this.result)
-    });
+      if (resArr) {
+        resArr.forEach((i: any) => {
+          i.forEach((j: any) => {
+            this.filteredlist.push(j)
+          });
+        })
+      }
+      else {
+        this.filteredlist = []
+      }
 
-    if (resArr) {
-      resArr.forEach((i: any) => {
-        i.forEach((j: any) => {
-          //tempArr.push(j)
-          this.filteredlist.push(j)
-        });
-      })
-      // console.log(tempArr);
-      // var idArr = tempArr.map(function(item){ return item.id });
-      // console.log(idArr);
+      if (this.filteredlist.length && this.filteredlist.length === this.productslist.length) {
+        this.ProductFound = 1;
+        this.getProducts();
+      }
+      else if (this.filteredlist.length && this.filteredlist.length < this.productslist.length) {
+        this.ProductFound = 2;
+  
+        // filtered item paginated
+        let len = this.filteredlist.length;
+        let perPage = len / 6;
+        let ceil = Math.ceil(perPage);
+        for (let i = 1; i <= ceil; i++) {
+          this.pagenumbers.push(i)
+        }
+        console.log(this.pagenumbers);
+        this.paginate(this.filteredlist, 6, this.atwhatpage);
+      }
+      else if (this.filteredlist.length === 0) {
+        this.ProductFound = 3;
+      }
     }
-    else {
-      this.filteredlist = []
-    }
-
-    if (this.filteredlist.length && this.filteredlist.length === this.productslist.length) {
-      this.ProductFound = 1;
+    else{
+      this.ProductFound = 1
       this.getProducts();
     }
-    else if (this.filteredlist.length && this.filteredlist.length < this.productslist.length) {
-      this.ProductFound = 2;
-
-      // filtered item paginated
-      let len = this.filteredlist.length;
-      let perPage = len / 6;
-      let ceil = Math.ceil(perPage);
-      for (let i = 1; i <= ceil; i++) {
-        this.pagenumbers.push(i)
-      }
-      console.log(this.pagenumbers);
-      this.paginate(this.filteredlist, 6, this.atwhatpage);
-    }
-    else if (this.filteredlist.length === 0) {
-      this.ProductFound = 3;
-    }
+   
   }
 
   searchByText(text: any) {
@@ -269,34 +272,41 @@ export class HomeComponent implements OnInit {
       element.checked = false
     });
 
-    this.productslist.forEach((s: any) => {
-      if ((s.name.toLowerCase().includes(text.toLowerCase())) ||
-        (s.price.toLowerCase().includes(text.toLowerCase())) || (s.desc.toLowerCase().includes(text.toLowerCase()))) {
-        resArr.push(s)
+    if(text && text.length >0){
+      this.productslist.forEach((s: any) => {
+        if ((s.name.toLowerCase().includes(text.toLowerCase())) ||
+          (s.price.toLowerCase().includes(text.toLowerCase())) || (s.desc.toLowerCase().includes(text.toLowerCase()))) {
+          resArr.push(s)
+        }
+      })
+  
+      this.filteredlist = resArr.length > 0 ? resArr : []
+      if (this.filteredlist.length && this.filteredlist.length === this.productslist.length) {
+        this.ProductFound = 1;
+        this.getProducts();
       }
-    })
-
-    this.filteredlist = resArr.length > 0 ? resArr : []
-    if (this.filteredlist.length && this.filteredlist.length === this.productslist.length) {
-      this.ProductFound = 1;
+      else if (this.filteredlist.length && this.filteredlist.length < this.productslist.length) {
+        this.ProductFound = 2;
+  
+        // filtered item paginated
+        let len = this.filteredlist.length;
+        let perPage = len / 6;
+        let ceil = Math.ceil(perPage);
+        for (let i = 1; i <= ceil; i++) {
+          this.pagenumbers.push(i)
+        }
+        console.log(this.pagenumbers);
+        this.paginate(this.filteredlist, 6, this.atwhatpage);
+      }
+      else if (this.filteredlist.length === 0) {
+        this.ProductFound = 3;
+      }
+    }
+    else{
+      this.ProductFound = 1
       this.getProducts();
     }
-    else if (this.filteredlist.length && this.filteredlist.length < this.productslist.length) {
-      this.ProductFound = 2;
-
-      // filtered item paginated
-      let len = this.filteredlist.length;
-      let perPage = len / 6;
-      let ceil = Math.ceil(perPage);
-      for (let i = 1; i <= ceil; i++) {
-        this.pagenumbers.push(i)
-      }
-      console.log(this.pagenumbers);
-      this.paginate(this.filteredlist, 6, this.atwhatpage);
-    }
-    else if (this.filteredlist.length === 0) {
-      this.ProductFound = 3;
-    }
+    
   }
 
   hidefilters() {
