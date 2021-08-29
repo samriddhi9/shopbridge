@@ -1,10 +1,15 @@
 # ShopBridgeUi
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.3.
+a. Run `npm install` in the projects' location
+b. Install json-server in the location `PS D:\ShopBridge\jsonapi>` with the command `npm run json:server`  
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+a. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+b. Run `npm run json:server` in the location `PS D:\ShopBridge\jsonapi>`.The data will load in localhost:3000.
+
+Application shall start working post these 2 steps
 
 ## Code scaffolding
 
