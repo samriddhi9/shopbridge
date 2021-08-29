@@ -211,11 +211,11 @@ export class HomeComponent implements OnInit {
     this.filteredlist = [];
     this.pagenumbers = []
 
-    if(options && options.length > 0){
+    if (options && options.length > 0) {
       options.forEach((element: any) => {
         this.result = this.productslist.filter(s => (s.name.toLowerCase().includes(element.toLowerCase())) ||
           (s.price.toLowerCase().includes(element.toLowerCase())) || (s.desc.toLowerCase().includes(element.toLowerCase())));
-  
+
         resArr.push(this.result)
       });
 
@@ -236,7 +236,7 @@ export class HomeComponent implements OnInit {
       }
       else if (this.filteredlist.length && this.filteredlist.length < this.productslist.length) {
         this.ProductFound = 2;
-  
+
         // filtered item paginated
         let len = this.filteredlist.length;
         let perPage = len / 6;
@@ -251,11 +251,11 @@ export class HomeComponent implements OnInit {
         this.ProductFound = 3;
       }
     }
-    else{
+    else {
       this.ProductFound = 1
       this.getProducts();
     }
-   
+
   }
 
   searchByText(text: any) {
@@ -272,14 +272,14 @@ export class HomeComponent implements OnInit {
       element.checked = false
     });
 
-    if(text && text.length >0){
+    if (text && text.length > 0) {
       this.productslist.forEach((s: any) => {
         if ((s.name.toLowerCase().includes(text.toLowerCase())) ||
           (s.price.toLowerCase().includes(text.toLowerCase())) || (s.desc.toLowerCase().includes(text.toLowerCase()))) {
           resArr.push(s)
         }
       })
-  
+
       this.filteredlist = resArr.length > 0 ? resArr : []
       if (this.filteredlist.length && this.filteredlist.length === this.productslist.length) {
         this.ProductFound = 1;
@@ -287,7 +287,7 @@ export class HomeComponent implements OnInit {
       }
       else if (this.filteredlist.length && this.filteredlist.length < this.productslist.length) {
         this.ProductFound = 2;
-  
+
         // filtered item paginated
         let len = this.filteredlist.length;
         let perPage = len / 6;
@@ -302,11 +302,11 @@ export class HomeComponent implements OnInit {
         this.ProductFound = 3;
       }
     }
-    else{
+    else {
       this.ProductFound = 1
       this.getProducts();
     }
-    
+
   }
 
   hidefilters() {
