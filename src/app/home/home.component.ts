@@ -16,8 +16,10 @@ export class HomeComponent implements OnInit {
 
   public productslist: Products[] = [];
   public filteredlist: Products[] = [];
+  public paginateditems: Products[] = [];
+  public pagenumbers: any;
   public treats: Options[] = [];
-  public camps: Options[] = [];
+  public tents: Options[] = [];
   public toys: Options[] = [];
   public action: any;
   public editIndex: any;
@@ -28,44 +30,67 @@ export class HomeComponent implements OnInit {
   public options: Options[] = [];
   public ProductFound: any = 1;
   public searchText: any;
+  public urlpattern: any = ``
+  public atwhatpage: any = 1;
+  public result:any =[]
   @ViewChild('addeditModal') addeditModal: ElementRef;
   @ViewChild('deleteModal') deleteModal: ElementRef;
 
-  constructor(private homeservice: HomeService) { }
+  constructor(private homeservice: HomeService) {
+
+  }
 
   ngOnInit(): void {
     this.productslist = [];
     this.treats = [];
-    this.camps = [];
+    this.tents = [];
     this.toys = [];
+    this.pagenumbers = [];
     this.getProducts();
     this.getFilterMenus();
     $("#treats").hide();
-    $("#camps").hide();
+    $("#tents").hide();
     $("#toys").hide();
     $(".treats-menu").click(function () {
       $("#treats").slideToggle();
     });
-    $(".camps-menu").click(function () {
-      $("#treats").slideToggle();
+    $(".tents-menu").click(function () {
+      $("#tents").slideToggle();
     });
     $(".toys-menu").click(function () {
-      $("#treats").slideToggle();
+      $("#toys").slideToggle();
     });
+
+  }
+
+  paginate(array: any, page_size: any, page_number: any) {
+    this.atwhatpage = page_number;
+    this.paginateditems = array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 
   //method to access service to fetch products
   getProducts() {
+    this.pagenumbers = []
     this.homeservice.loadProducts().subscribe((res: any) => {
       this.productslist = res;
+      // all item paginated
+      let len = this.productslist.length;
+      let perPage = len / 6;
+      let ceil = Math.ceil(perPage);
+      for (let i = 1; i <= ceil; i++) {
+        this.pagenumbers.push(i)
+      }
+      console.log(this.pagenumbers);
+      this.paginate(this.productslist, 6, this.atwhatpage);
     });
+
   }
 
   //method to access service to fetch products
   getFilterMenus() {
     this.homeservice.loadFilterMenus().subscribe((res: any) => {
       this.treats = res.treats;
-      this.camps = res.camps;
+      this.tents = res.tents;
       this.toys = res.toys;
     });
   }
@@ -75,7 +100,6 @@ export class HomeComponent implements OnInit {
     if (this.action === 'add') {
       this.homeservice.addnewProduct(addeditForm.value).subscribe((res: any) => {
         console.log(res)
-        this.getProducts();
         this.submitstatus = 1;
         let that = this;
         setTimeout(function () {
@@ -84,12 +108,19 @@ export class HomeComponent implements OnInit {
         setTimeout(function () {
           $(that.addeditModal.nativeElement).modal('hide');
         }, 3000);
+        setTimeout(function () {
+          if (that.ProductFound === 2) {
+            that.paginate(that.filteredlist, 6, that.atwhatpage)
+          }
+          else if (that.ProductFound === 1) {
+            that.getProducts();
+          }
+        }, 4000);
       });
     }
     else {
       this.homeservice.updateProduct(this.editid, addeditForm.value).subscribe((res: any) => {
         console.log(res)
-        this.getProducts();
         this.submitstatus = 1;
         let that = this;
         setTimeout(function () {
@@ -98,17 +129,34 @@ export class HomeComponent implements OnInit {
         setTimeout(function () {
           $(that.addeditModal.nativeElement).modal('hide');
         }, 3000);
+        setTimeout(function () {
+          if (that.ProductFound === 2) {
+            that.paginate(that.filteredlist, 6, that.atwhatpage)
+          }
+          else if (that.ProductFound === 1) {
+            that.getProducts();
+          }
+        }, 4000);
       })
     }
   }
 
   //to open add/edit modal
-  openModal(purpose: any, index?: any, id?: any) {
+  openModal(purpose: any, index?: any, id?: any, atwhatpage?: any) {
     this.submitstatus = 0;
     $(this.addeditModal.nativeElement).modal('show');
     this.action = purpose;
-    this.editIndex = index;
-    this.editid = id;
+    if (purpose === 'edit') {
+      this.editIndex = index;
+      this.editid = id;
+    }
+
+    if (this.ProductFound === 2) {
+      this.paginate(this.filteredlist, 6, atwhatpage)
+    }
+    else if (this.ProductFound === 1) {
+      this.getProducts();
+    }
   }
 
   //open delete confirmation modal
@@ -122,7 +170,6 @@ export class HomeComponent implements OnInit {
   deleteProduct() {
     this.homeservice.deleteProduct(this.deleteid).subscribe((res: any) => {
       console.log(res)
-      this.getProducts();
       this.deletestatus = 1;
       let that = this;
       setTimeout(function () {
@@ -130,11 +177,13 @@ export class HomeComponent implements OnInit {
       }, 2000);
       setTimeout(function () {
         $(that.deleteModal.nativeElement).modal('hide');
+        that.hidefilters();
+        that.ProductFound = 1
       }, 3000);
     })
   }
 
-  applyfilters(treats: any, camps: any, toys: any) {
+  applyfilters(treats: any, tents: any, toys: any) {
     debugger
     this.options = [];
     treats.forEach((element: any) => {
@@ -142,7 +191,7 @@ export class HomeComponent implements OnInit {
         this.options.push(element.name)
       }
     });
-    camps.forEach((element: any) => {
+    tents.forEach((element: any) => {
       if (element.checked) {
         this.options.push(element.name)
       }
@@ -159,25 +208,47 @@ export class HomeComponent implements OnInit {
   searchProductss(options: any) {
     debugger
     let resArr: Products[] = [];
+    this.filteredlist =  [];
+    this.pagenumbers = []
 
     options.forEach((element: any) => {
-      let result: any;
-      result = this.productslist.find(s => (s.name.toLowerCase().includes(element.toLowerCase())) ||
+      this.result = this.productslist.filter(s => (s.name.toLowerCase().includes(element.toLowerCase())) ||
         (s.price.toLowerCase().includes(element.toLowerCase())) || (s.desc.toLowerCase().includes(element.toLowerCase())));
-
-      if (result) {
-        resArr.push(result)
-      }
+    
+        resArr.push(this.result)
     });
 
-    console.log(resArr);
+    if(resArr){
+      resArr.forEach((i:any)=>{
+        i.forEach((j:any) => {
+         //tempArr.push(j)
+         this.filteredlist.push(j)
+        });
+      })
+      // console.log(tempArr);
+      // var idArr = tempArr.map(function(item){ return item.id });
+      // console.log(idArr);
+    }
+    else{
+      this.filteredlist = []
+    }
 
-    this.filteredlist = resArr.length > 0 ? resArr : []
     if (this.filteredlist.length && this.filteredlist.length === this.productslist.length) {
       this.ProductFound = 1;
+      this.getProducts();
     }
     else if (this.filteredlist.length && this.filteredlist.length < this.productslist.length) {
       this.ProductFound = 2;
+
+      // filtered item paginated
+      let len = this.filteredlist.length;
+      let perPage = len / 6;
+      let ceil = Math.ceil(perPage);
+      for (let i = 1; i <= ceil; i++) {
+        this.pagenumbers.push(i)
+      }
+      console.log(this.pagenumbers);
+      this.paginate(this.filteredlist, 6, this.atwhatpage);
     }
     else if (this.filteredlist.length === 0) {
       this.ProductFound = 3;
@@ -185,7 +256,18 @@ export class HomeComponent implements OnInit {
   }
 
   searchByText(text: any) {
+    this.filteredlist = []
     let resArr: Products[] = [];
+    this.pagenumbers = []
+    this.treats.forEach((element: any) => {
+      element.checked = false
+    });
+    this.tents.forEach((element: any) => {
+      element.checked = false
+    });
+    this.toys.forEach((element: any) => {
+      element.checked = false
+    });
 
     this.productslist.forEach((s: any) => {
       if ((s.name.toLowerCase().includes(text.toLowerCase())) ||
@@ -197,9 +279,20 @@ export class HomeComponent implements OnInit {
     this.filteredlist = resArr.length > 0 ? resArr : []
     if (this.filteredlist.length && this.filteredlist.length === this.productslist.length) {
       this.ProductFound = 1;
+      this.getProducts();
     }
     else if (this.filteredlist.length && this.filteredlist.length < this.productslist.length) {
       this.ProductFound = 2;
+
+      // filtered item paginated
+      let len = this.filteredlist.length;
+      let perPage = len / 6;
+      let ceil = Math.ceil(perPage);
+      for (let i = 1; i <= ceil; i++) {
+        this.pagenumbers.push(i)
+      }
+      console.log(this.pagenumbers);
+      this.paginate(this.filteredlist, 6, this.atwhatpage);
     }
     else if (this.filteredlist.length === 0) {
       this.ProductFound = 3;
@@ -213,7 +306,7 @@ export class HomeComponent implements OnInit {
     this.treats.forEach((element: any) => {
       element.checked = false
     });
-    this.camps.forEach((element: any) => {
+    this.tents.forEach((element: any) => {
       element.checked = false
     });
     this.toys.forEach((element: any) => {

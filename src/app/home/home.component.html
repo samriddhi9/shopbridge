@@ -28,7 +28,7 @@
                                 Treats <i class="fa fa-angle-down"></i>
                             </div>
                             <ul id="treats" class="common-ul mt-3">
-                                <li *ngFor="let t of treats;">
+                                <li *ngFor="let t of treats;" (click)="getProducts();ProductFound=1;searchText='';atwhatpage= 1">
                                     <input type="checkbox" id="{{t.name}}" [(ngModel)]="t.checked">
                                     <label for="{{t.name}}" class="ml-3"> {{t.name}} </label>
                                 </li>
@@ -37,10 +37,10 @@
                         <hr class="border-gray">
 
                         <div class="filterlist">
-                            <div class="camps-menu filterMenu">Camps & Beds <i class="fa fa-angle-down"></i></div>
+                            <div class="tents-menu filterMenu">Tents & Beds <i class="fa fa-angle-down"></i></div>
 
-                            <ul id="camps" class="common-ul mt-3">
-                                <li *ngFor="let c of camps;">
+                            <ul id="tents" class="common-ul mt-3">
+                                <li *ngFor="let c of tents;" (click)="getProducts();ProductFound=1;searchText='';atwhatpage= 1">
                                     <input type="checkbox" id="{{c.name}}" [(ngModel)]="c.checked">
                                     <label for="{{c.name}}" class="ml-3"> {{c.name}} </label>
                                 </li>
@@ -52,7 +52,7 @@
                             <div class="toys-menu filterMenu">Toys<i class="fa fa-angle-down ml-1"></i></div>
 
                             <ul id="toys" class="common-ul mt-3">
-                                <li *ngFor="let t of toys;">
+                                <li *ngFor="let t of toys;" (click)="getProducts();ProductFound=1;searchText='';atwhatpage= 1">
                                     <input type="checkbox" id="{{t.name}}" [(ngModel)]="t.checked">
                                     <label for="{{t.name}}" class="ml-3"> {{t.name}} </label>
                                 </li>
@@ -61,7 +61,7 @@
                         </div>
                         <hr class="border-gray">
                         <div class="d-flex" style="justify-content: center;">
-                            <button type="button" class="btn btn-primary" (click)="applyfilters(treats, camps , toys)"
+                            <button type="button" class="btn btn-primary" (click)="applyfilters(treats, tents , toys)"
                                 style="text-align: center;">
                                 Apply Filters</button>
                         </div>
@@ -74,39 +74,13 @@
             </div>
             <div class="div75 ml-5">
                 <!-- //all products -->
-                <div id="accordion" class="row" *ngIf="ProductFound===1">
-                    <div class="column" *ngFor="let p of productslist; let i = index" [style.display]="p.display">
+                <div id="accordion" class="row" *ngIf="ProductFound===1 || ProductFound===2">
+                    <div class="column" *ngFor="let p of paginateditems; let i = index" [style.display]="p.display">
                         <div class="card">
                             <div class="card-body">
                                 <span class="d-flex" style="justify-content: space-between;">
                                     <i class="fa fa-edit" style="font-size:25px;color: blue;"
-                                        (click)="openModal('edit',i,p.id)"></i>
-                                    <i class="fa fa-trash" style="font-size:26px;color: blue;"
-                                        (click)="opendeleteModal(p.id)"></i>
-                                </span>
-                                <div class="img-responsive">
-                                    <img src="{{p.img}}" class="item-image">
-                                </div>
-                                <div class="inner-material d-flex">
-                                    <div>{{p.name}}</div>
-                                    <div>{{p.price}}</div>
-                                </div>
-                                <div class="description">
-                                    {{p.desc}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- //filtered lists -->
-                <div id="accordion" class="row" *ngIf="ProductFound===2">
-                    <div class="column" *ngFor="let p of filteredlist; let i = index" [style.display]="p.display">
-                        <div class="card">
-                            <div class="card-body">
-                                <span class="d-flex" style="justify-content: space-between;">
-                                    <i class="fa fa-edit" style="font-size:25px;color: blue;"
-                                        (click)="openModal('edit',i,p.id)"></i>
+                                        (click)="openModal('edit',i,p.id,atwhatpage)"></i>
                                     <i class="fa fa-trash" style="font-size:26px;color: blue;"
                                         (click)="opendeleteModal(p.id)"></i>
                                 </span>
@@ -130,18 +104,21 @@
                     Oops,No Matching Results!!
                 </div>
 
-                <div class="addNew" (click)="openModal('add')">
+                <div class="addNew" (click)="openModal('add',atwhatpage)" *ngIf="ProductFound===1">
                     <i class="fa fa-plus-circle" style="font-size:50px;color: blue;"></i>
                 </div>
 
-                <div class="pagination">
-                    <div id="paginator">
-
+                <div class="pagination d-flex mt-4" *ngIf="ProductFound===1">
+                    <div class="paginator">
+                       <button type="button" class="btn btn-primary paginatebtn ml-3" *ngFor="let p of pagenumbers"
+                       (click)="paginate(productslist,6,p)">{{p}}</button>
                     </div>
                 </div>
-                <div class="searchpagination">
-                    <div id="searchpaginator">
 
+                <div class="searchpagination d-flex mt-4" *ngIf="ProductFound===2">
+                    <div class="searchpaginator">
+                        <button type="button" class="btn btn-danger paginatebtn ml-3" *ngFor="let p of pagenumbers"
+                        (click)="paginate(filteredlist,6,p)">{{p}}</button>
                     </div>
                 </div>
 
@@ -157,7 +134,8 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add New Item</h4>
+                <h4 class="modal-title" *ngIf="action === 'edit'">Edit Item</h4>
+                <h4 class="modal-title" *ngIf="action === 'add'">Add New Item</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -171,7 +149,7 @@
                         <p class="d-flex forminput" [ngClass]="{'has-danger': name.invalid && (name.dirty || name.touched),
                         'has-success': name.valid && (name.dirty || name.touched) }">
                             <label for="Name">Name of Product :</label>
-                            <input type="text" name="name" ngModel [(ngModel)]="productslist[editIndex].name"
+                            <input type="text" name="name" ngModel [(ngModel)]="paginateditems[editIndex].name"
                                 #name="ngModel" placeholder="Enter Name" required>
                         </p>
                         <div class="alert alert-danger" *ngIf="name.errors && (name.dirty || name.touched)">
@@ -183,7 +161,7 @@
                         <p class="d-flex forminput" [ngClass]="{'has-danger': price.invalid && (price.dirty || price.touched),
                         'has-success': price.valid && (price.dirty || price.touched) }">
                             <label for="price">Price :</label>
-                            <input type="text" name="price" ngModel [(ngModel)]="productslist[editIndex].price"
+                            <input type="text" name="price" ngModel [(ngModel)]="paginateditems[editIndex].price"
                                 #price="ngModel" placeholder="Enter Price" required>
                         </p>
                         <div class="alert alert-danger" *ngIf="price.errors && (price.dirty || price.touched)">
@@ -194,7 +172,7 @@
                         <p class="d-flex forminput" [ngClass]="{'has-danger': desc.invalid && (desc.dirty || desc.touched),
                         'has-success': desc.valid && (desc.dirty || desc.touched) }">
                             <label for="desc">Description :</label>
-                            <input type="text" name="desc" ngModel [(ngModel)]="productslist[editIndex].desc"
+                            <input type="text" name="desc" ngModel [(ngModel)]="paginateditems[editIndex].desc"
                                 #desc="ngModel" placeholder="Enter Description" minlength="5" required>
                         </p>
                         <div class="alert alert-danger" *ngIf="desc.errors && (desc.dirty || desc.touched)">
@@ -206,17 +184,18 @@
                         <p class="d-flex forminput" [ngClass]="{'has-danger': img.invalid && (img.dirty || img.touched),
                         'has-success': img.valid && (img.dirty || img.touched) }">
                             <label for="img">Image URL :</label>
-                            <input type="text" name="img" ngModel [(ngModel)]="productslist[editIndex].img"
+                            <input type="url" id="img" name="img" ngModel [(ngModel)]="paginateditems[editIndex].img"
                                 #img="ngModel" placeholder="Enter Image URL" required>
                         </p>
                         <div class="alert alert-danger" *ngIf="img.errors && (img.dirty || img.touched)">
                             <p *ngIf="img.errors?.required">URL is required</p>
+                            <!-- <p *ngIf="img.errors?.pattern">URL is invalid</p> -->
                         </div>
 
                         <!-- Discount -->
                         <p class="d-flex forminput">
                             <label for="discount">Discount :</label>
-                            <input type="text" name="discount" ngModel [(ngModel)]="productslist[editIndex].discount"
+                            <input type="text" name="discount" ngModel [(ngModel)]="paginateditems[editIndex].discount"
                                 placeholder="Enter Discount offer">
                         </p>
                     </span>
@@ -259,10 +238,11 @@
                         <p class="d-flex forminput" [ngClass]="{'has-danger': img.invalid && (img.dirty || img.touched),
                         'has-success': img.valid && (img.dirty || img.touched) }">
                             <label for="img">Image URL :</label>
-                            <input type="text" name="img" ngModel #img="ngModel" placeholder="Enter Image URL" required>
+                            <input type="url" id="img" name="img" ngModel #img="ngModel" placeholder="Enter Image URL" required>
                         </p>
                         <div class="alert alert-danger" *ngIf="img.errors && (img.dirty || img.touched)">
                             <p *ngIf="img.errors?.required">URL is required</p>
+                            <!-- <p *ngIf="img.errors?.pattern">URL is invalid</p> -->
                         </div>
 
                         <!-- Discount -->

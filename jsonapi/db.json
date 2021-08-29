@@ -5,7 +5,7 @@
       "price": "₹560",
       "desc": "Dry Cat food (2 kilograms)",
       "img": "https://5.imimg.com/data5/LC/HE/MY-29684602/400-gram-whiskas-cat-food-500x500.jpg",
-      "discount": "20% off",
+      "discount": "10% off",
       "id": 2
     },
     {
@@ -47,6 +47,62 @@
       "img": "https://rukminim1.flixcart.com/image/416/416/k2z1t3k0/pet-bed/5/h/h/l-54-cream-with-brown-r-k-products-original-imafm6pyjpcqyjan.jpeg?q=70",
       "discount": "5% off",
       "id": 8
+    },
+    {
+      "name": "Cat Tent",
+      "price": "₹1500",
+      "desc": "Tents for Cats and Kittens ,comfortable",
+      "img": "https://m.media-amazon.com/images/I/81OzQt0KYzL._SL1500_.jpg",
+      "discount": "None",
+      "id": 9
+    },
+    {
+      "name": "Meao",
+      "price": "₹250",
+      "desc": "1.5 kg dry treats for your kittens",
+      "img": "https://cdn.shopify.com/s/files/1/0312/8826/2795/products/Me-O_Creamy_Cat_Treats_-_Crab_-_Pack_of_4_4_x_60_gms_-C-MEO-CT-001.png?v=1582144692",
+      "discount": "4% off",
+      "id": 10
+    },
+    {
+      "name": "Dog Bone",
+      "price": "₹50",
+      "desc": "Pack of two Dog Bones",
+      "img": "https://cdn.shopify.com/s/files/1/0086/0795/7054/products/index-15_510x@2x.jpg?v=1613545605",
+      "discount": "5% off",
+      "id": 11
+    },
+    {
+      "name": "Cat Bow",
+      "price": "₹50",
+      "desc": "Pack of two Bows",
+      "img": "https://m.media-amazon.com/images/I/71Pw1niIjkL._SL1000_.jpg",
+      "discount": "None",
+      "id": 12
+    },
+    {
+      "name": "Pet Bed",
+      "price": "₹499",
+      "desc": "Comfortable Fabric Pet Bed (Cat and Dog)",
+      "img": "https://rukminim1.flixcart.com/image/416/416/k2z1t3k0/pet-bed/5/h/h/l-54-cream-with-brown-r-k-products-original-imafm6pyjpcqyjan.jpeg?q=70",
+      "discount": "5% off",
+      "id": 13
+    },
+    {
+      "name": "Dog Toy",
+      "price": "₹250",
+      "desc": "Soft Toys for pets (Dog / Cat)",
+      "img": "https://m.media-amazon.com/images/I/41tYSX07FCS.jpg",
+      "discount": "5% off",
+      "id": 14
+    },
+    {
+      "name": "Pedigree Wet",
+      "price": "₹550",
+      "desc": "3 kgs",
+      "img": "https://i5.peapod.com/c/5B/5B1LS.png",
+      "discount": "5% off",
+      "id": 16
     }
   ],
   "filtermenus": {
@@ -64,12 +120,12 @@
         "name": "Pedigree"
       }
     ],
-    "camps": [
+    "tents": [
       {
         "name": "Pet Bed"
       },
       {
-        "name": "Pet Camp"
+        "name": "Cat Tent"
       },
       {
         "name": "Cat House"

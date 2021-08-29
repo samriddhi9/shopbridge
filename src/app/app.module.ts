@@ -18,7 +18,7 @@ import { HomeComponent } from './home/home.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ModalModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     

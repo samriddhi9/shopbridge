@@ -105,6 +105,15 @@ button , .filterMenu , .common-ul li>input , .common-ul li>label , i{
     color: gray;
     font-weight: 500;
 }
+.pagination , .searchpagination{
+    width: 100%;
+    justify-content: center;
+}
+
+.paginateBtn{
+    width: 20px;
+    height: 20px;
+}
 /* //media queries  */
 @media screen  and (min-width: 1599px){
     .div25{
