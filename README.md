@@ -7,7 +7,7 @@ b. Install json-server in the location `ShopBridge\jsonapi>` with the command `n
 ## Development server
 
 a. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-b. Run `npm run json:server` in the location `PS D:\ShopBridge\jsonapi>`.The data will load in localhost:3000.
+b. Run `npm run json:server` in the location `ShopBridge\jsonapi>`.The data will load in localhost:3000.
 
 Application shall start working post these 2 steps
 
