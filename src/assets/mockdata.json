@@ -1,0 +1,20 @@
+[
+    {
+        "name": "cat food",
+        "price": "2$",
+        "description": "A next-generation digital platform for real-time data reporting and community hub to support daily refinery operations",
+        "image": "Software Development,Mobile Application Development, Application Maintenance Services, Software Testing, UI/UX Design"
+    },
+    {
+        "name": "whiskas",
+        "price": "3$",
+        "description": "A next-generation digital platform for real-time data reporting and community hub to support daily refinery operations",
+        "image": "Software Development,Mobile Application Development, Application Maintenance Services, Software Testing, UI/UX Design"
+    },
+    {
+        "name": "tuna",
+        "price": "3$",
+        "description": "A next-generation digital platform for real-time data reporting and community hub to support daily refinery operations",
+        "image": "Software Development,Mobile Application Development, Application Maintenance Services, Software Testing, UI/UX Design"
+    }
+]

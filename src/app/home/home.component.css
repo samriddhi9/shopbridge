@@ -1,0 +1,164 @@
+.refineItems{
+    width: 100%;
+    border-radius: 10px;
+    height: 50px;
+    padding: 0 10px 0 10px;
+}
+.products-container{
+    justify-content: center;
+}
+.main-container{
+    width: 90%;
+}
+.divided-container{
+    width: 100%;
+}
+.div25{
+    width: 25%;
+}
+.div75{
+    width: 70%;
+}
+
+.column {
+    float: left;
+    width: 33.3%;
+    padding: 5px 7px !important;
+}
+.card {
+    padding: 1rem;
+    position: relative;
+    top: 0;
+    transition: top .2s ease;
+    height: 300px;
+    box-shadow: 2px 2px 10px rgba(2, 2, 33, 0.14);
+    border-radius: 5px;
+}
+.card:focus,.card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
+    top: -5px;
+ }
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.card-body-hover {
+    transition: top .2s ease;
+}
+.addNew{
+    position: fixed;
+    bottom: 31px;
+    right: 25px;
+}
+.forminput{
+    width: 100%;
+}
+.forminput label{
+    width: 30%;
+}
+
+.forminput input{
+    width: 70%;
+    border-radius: 5px;
+    height: 40px;
+    padding: 0 10px 0 10px;
+}
+
+.forminput input:focus-visible{
+    border: none;
+}
+.common-ul {
+    list-style-type: none;
+}
+
+button , .filterMenu , .common-ul li>input , .common-ul li>label , i{
+    cursor: pointer;
+}
+.img-responsive{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.item-image{
+    width: 145px;
+    height: 150px;
+}
+.inner-material{
+    justify-content: space-between;
+}
+.description{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 240px;
+    overflow: hidden;
+}
+.filterMenu {
+    color: blue;
+}
+
+.ProductFound{
+    text-align: center;
+    font-size: x-large;
+    color: gray;
+    font-weight: 500;
+}
+/* //media queries  */
+@media screen  and (min-width: 1599px){
+    .div25{
+        width: 350px;
+    }
+    .div75,  #accordion{
+        width: 1036px;
+    }
+
+    .main-container ,.divided-container{
+        width: 1440px;
+    }
+    .column{
+        width: 33.3%;
+    }
+}
+@media screen  and (max-width: 1099px){
+    .column {
+        width: 50%;
+        padding: 15px 15px !important;
+    }
+    .card {
+        padding: 0rem;
+    }
+    li label {
+        display: contents!important;
+       }
+    h4{
+        font-size: 17px;
+    }
+}
+@media  screen and (max-width: 768px) {
+    .column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+    }
+   .card {
+        height: auto;
+        padding: 1rem;
+    }
+   .divided-container{
+       flex-direction: column;
+   }
+   .div25 , .div75{
+       width: 100%;
+   }
+   .div75{
+       display: flex;
+       margin-left: 0 !important;
+       justify-content: center;
+   }
+   #accordion{
+       width: 97%;
+   }
+  
+}

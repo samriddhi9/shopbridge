@@ -1,0 +1,332 @@
+<div id="content" class="products-container d-flex">
+    <div class="main-container d-flex">
+        <div class="divided-container d-flex">
+            <div class="div25">
+                <nav id="side-navigation" class="refiners">
+                    <div class="filter-cs">
+                        <h4>SEARCH PET ITEMS</h4>
+                    </div>
+                    <div>
+                        <hr class="divider">
+                        <div class="active">
+                            <div>
+                                <input name="search-field" type="search" id="search" aria-label="Search Items"
+                                    title="Enter your search phrase" placeholder="&#xF002; Search Items"
+                                    style="font-family:Arial, FontAwesome" aria-controls="" class="refineItems"
+                                    (keyup.enter)="searchByText(searchText)" [(ngModel)]="searchText"
+                                    (keydown.backspace)="getProducts();ProductFound=1">
+                            </div>
+                        </div>
+
+                        <div class="filterlist clrall mt-3">
+                            <button type="button" class="mb-4 btn-primary btn" (click)="hidefilters()">CLEAR ALL
+                                FILTERS</button>
+                        </div>
+
+                        <div class="filterlist">
+                            <div class="treats-menu filterMenu">
+                                Treats <i class="fa fa-angle-down"></i>
+                            </div>
+                            <ul id="treats" class="common-ul mt-3">
+                                <li *ngFor="let t of treats;">
+                                    <input type="checkbox" id="{{t.name}}" [(ngModel)]="t.checked">
+                                    <label for="{{t.name}}" class="ml-3"> {{t.name}} </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr class="border-gray">
+
+                        <div class="filterlist">
+                            <div class="camps-menu filterMenu">Camps & Beds <i class="fa fa-angle-down"></i></div>
+
+                            <ul id="camps" class="common-ul mt-3">
+                                <li *ngFor="let c of camps;">
+                                    <input type="checkbox" id="{{c.name}}" [(ngModel)]="c.checked">
+                                    <label for="{{c.name}}" class="ml-3"> {{c.name}} </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <hr class="border-gray">
+
+                        <div class="filterlist">
+                            <div class="toys-menu filterMenu">Toys<i class="fa fa-angle-down ml-1"></i></div>
+
+                            <ul id="toys" class="common-ul mt-3">
+                                <li *ngFor="let t of toys;">
+                                    <input type="checkbox" id="{{t.name}}" [(ngModel)]="t.checked">
+                                    <label for="{{t.name}}" class="ml-3"> {{t.name}} </label>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <hr class="border-gray">
+                        <div class="d-flex" style="justify-content: center;">
+                            <button type="button" class="btn btn-primary" (click)="applyfilters(treats, camps , toys)"
+                                style="text-align: center;">
+                                Apply Filters</button>
+                        </div>
+
+                        <hr class="border-gray">
+
+                    </div>
+                </nav>
+
+            </div>
+            <div class="div75 ml-5">
+                <!-- //all products -->
+                <div id="accordion" class="row" *ngIf="ProductFound===1">
+                    <div class="column" *ngFor="let p of productslist; let i = index" [style.display]="p.display">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="d-flex" style="justify-content: space-between;">
+                                    <i class="fa fa-edit" style="font-size:25px;color: blue;"
+                                        (click)="openModal('edit',i,p.id)"></i>
+                                    <i class="fa fa-trash" style="font-size:26px;color: blue;"
+                                        (click)="opendeleteModal(p.id)"></i>
+                                </span>
+                                <div class="img-responsive">
+                                    <img src="{{p.img}}" class="item-image">
+                                </div>
+                                <div class="inner-material d-flex">
+                                    <div>{{p.name}}</div>
+                                    <div>{{p.price}}</div>
+                                </div>
+                                <div class="description">
+                                    {{p.desc}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- //filtered lists -->
+                <div id="accordion" class="row" *ngIf="ProductFound===2">
+                    <div class="column" *ngFor="let p of filteredlist; let i = index" [style.display]="p.display">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="d-flex" style="justify-content: space-between;">
+                                    <i class="fa fa-edit" style="font-size:25px;color: blue;"
+                                        (click)="openModal('edit',i,p.id)"></i>
+                                    <i class="fa fa-trash" style="font-size:26px;color: blue;"
+                                        (click)="opendeleteModal(p.id)"></i>
+                                </span>
+                                <div class="img-responsive">
+                                    <img src="{{p.img}}" class="item-image">
+                                </div>
+                                <div class="inner-material d-flex">
+                                    <div>{{p.name}}</div>
+                                    <div>{{p.price}}</div>
+                                </div>
+                                <div class="description">
+                                    {{p.desc}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- //no products -->
+                <div class="ProductFound" *ngIf="ProductFound===3">
+                    Oops,No Matching Results!!
+                </div>
+
+                <div class="addNew" (click)="openModal('add')">
+                    <i class="fa fa-plus-circle" style="font-size:50px;color: blue;"></i>
+                </div>
+
+                <div class="pagination">
+                    <div id="paginator">
+
+                    </div>
+                </div>
+                <div class="searchpagination">
+                    <div id="searchpaginator">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- //modal to add new product or edit existing one -->
+<div class="modal" id="addeditModal" #addeditModal>
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add New Item</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form #addeditForm="ngForm" (ngSubmit)="onSubmit(addeditForm)">
+
+                    <span *ngIf="action === 'edit'">
+
+                        <!-- Name -->
+                        <p class="d-flex forminput" [ngClass]="{'has-danger': name.invalid && (name.dirty || name.touched),
+                        'has-success': name.valid && (name.dirty || name.touched) }">
+                            <label for="Name">Name of Product :</label>
+                            <input type="text" name="name" ngModel [(ngModel)]="productslist[editIndex].name"
+                                #name="ngModel" placeholder="Enter Name" required>
+                        </p>
+                        <div class="alert alert-danger" *ngIf="name.errors && (name.dirty || name.touched)">
+                            <p *ngIf="name.errors?.required">Name is required</p>
+
+                        </div>
+
+                        <!-- Price -->
+                        <p class="d-flex forminput" [ngClass]="{'has-danger': price.invalid && (price.dirty || price.touched),
+                        'has-success': price.valid && (price.dirty || price.touched) }">
+                            <label for="price">Price :</label>
+                            <input type="text" name="price" ngModel [(ngModel)]="productslist[editIndex].price"
+                                #price="ngModel" placeholder="Enter Price" required>
+                        </p>
+                        <div class="alert alert-danger" *ngIf="price.errors && (price.dirty || price.touched)">
+                            <p *ngIf="price.errors?.required">Price is required</p>
+                        </div>
+
+                        <!-- Description -->
+                        <p class="d-flex forminput" [ngClass]="{'has-danger': desc.invalid && (desc.dirty || desc.touched),
+                        'has-success': desc.valid && (desc.dirty || desc.touched) }">
+                            <label for="desc">Description :</label>
+                            <input type="text" name="desc" ngModel [(ngModel)]="productslist[editIndex].desc"
+                                #desc="ngModel" placeholder="Enter Description" minlength="5" required>
+                        </p>
+                        <div class="alert alert-danger" *ngIf="desc.errors && (desc.dirty || desc.touched)">
+                            <p *ngIf="desc.errors?.required">Description is required</p>
+                            <p *ngIf="desc.errors?.minlength">Description must contain at least the 2 character</p>
+                        </div>
+
+                        <!-- Image -->
+                        <p class="d-flex forminput" [ngClass]="{'has-danger': img.invalid && (img.dirty || img.touched),
+                        'has-success': img.valid && (img.dirty || img.touched) }">
+                            <label for="img">Image URL :</label>
+                            <input type="text" name="img" ngModel [(ngModel)]="productslist[editIndex].img"
+                                #img="ngModel" placeholder="Enter Image URL" required>
+                        </p>
+                        <div class="alert alert-danger" *ngIf="img.errors && (img.dirty || img.touched)">
+                            <p *ngIf="img.errors?.required">URL is required</p>
+                        </div>
+
+                        <!-- Discount -->
+                        <p class="d-flex forminput">
+                            <label for="discount">Discount :</label>
+                            <input type="text" name="discount" ngModel [(ngModel)]="productslist[editIndex].discount"
+                                placeholder="Enter Discount offer">
+                        </p>
+                    </span>
+
+                    <span *ngIf="action === 'add'">
+
+                        <!-- Name -->
+                        <p class="d-flex forminput" [ngClass]="{'has-danger': name.invalid && (name.dirty || name.touched),
+                        'has-success': name.valid && (name.dirty || name.touched) }">
+                            <label for="Name">Name of Product :</label>
+                            <input type="text" name="name" ngModel #name="ngModel" placeholder="Enter Name" required>
+                        </p>
+                        <div class="alert alert-danger" *ngIf="name.errors && (name.dirty || name.touched)">
+                            <p *ngIf="name.errors?.required">Name is required</p>
+                        </div>
+
+                        <!-- Price -->
+                        <p class="d-flex forminput" [ngClass]="{'has-danger': price.invalid && (price.dirty || price.touched),
+                        'has-success': price.valid && (price.dirty || price.touched) }">
+                            <label for="price">Price :</label>
+                            <input type="text" name="price" ngModel #price="ngModel" placeholder="Enter Price" required>
+                        </p>
+                        <div class="alert alert-danger" *ngIf="price.errors && (price.dirty || price.touched)">
+                            <p *ngIf="price.errors?.required">Price is required</p>
+                        </div>
+
+                        <!-- Description -->
+                        <p class="d-flex forminput" [ngClass]="{'has-danger': desc.invalid && (desc.dirty || desc.touched),
+                        'has-success': desc.valid && (desc.dirty || desc.touched) }">
+                            <label for="desc">Description :</label>
+                            <input type="text" name="desc" ngModel #desc="ngModel" placeholder="Enter Description"
+                                minlength="5" required>
+                        </p>
+                        <div class="alert alert-danger" *ngIf="desc.errors && (desc.dirty || desc.touched)">
+                            <p *ngIf="desc.errors?.required">Description is required</p>
+                            <p *ngIf="desc.errors?.minlength">Description must contain at least the 2 character</p>
+                        </div>
+
+                        <!-- Image -->
+                        <p class="d-flex forminput" [ngClass]="{'has-danger': img.invalid && (img.dirty || img.touched),
+                        'has-success': img.valid && (img.dirty || img.touched) }">
+                            <label for="img">Image URL :</label>
+                            <input type="text" name="img" ngModel #img="ngModel" placeholder="Enter Image URL" required>
+                        </p>
+                        <div class="alert alert-danger" *ngIf="img.errors && (img.dirty || img.touched)">
+                            <p *ngIf="img.errors?.required">URL is required</p>
+                        </div>
+
+                        <!-- Discount -->
+                        <p class="d-flex forminput">
+                            <label for="discount">Discount :</label>
+                            <input type="text" name="discount" placeholder="Enter Discount offer" ngModel>
+                        </p>
+                    </span>
+
+                    <div class="progress" *ngIf="submitstatus===1">
+                        <div class="progress-bar" style="width:30%"></div>
+                    </div>
+                    <div class="progress" *ngIf="submitstatus===2">
+                        <div class="progress-bar" style="width:100%"></div>
+                    </div>
+
+                    <p class="mt-4" style="text-align: center;">
+                        <button class="btn btn-primary" type="submit" [disabled]="addeditForm.invalid">Submit</button>
+                    </p>
+
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- //modal to delete -->
+<div class="modal" id="deleteModal" #deleteModal>
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Delete Item</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="text-align: center;">
+                Are you sure you want to delete?
+                <div class="d-flex mt-4" style="justify-content:center;">
+                    <button type="button" class="btn btn-primary" (click)="deleteProduct()">Yes</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-danger ml-3">No</button>
+                </div>
+
+                <div class="progress mt-4 mb-4" *ngIf="deletestatus===1">
+                    <div class="progress-bar" style="width:30%"></div>
+                </div>
+                <div class="progress mt-4 mb-4" *ngIf="deletestatus===2">
+                    <div class="progress-bar" style="width:100%"></div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

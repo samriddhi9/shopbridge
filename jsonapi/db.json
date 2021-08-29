@@ -1,0 +1,99 @@
+{
+  "products": [
+    {
+      "name": "Whiskas",
+      "price": "₹560",
+      "desc": "Dry Cat food (2 kilograms)",
+      "img": "https://5.imimg.com/data5/LC/HE/MY-29684602/400-gram-whiskas-cat-food-500x500.jpg",
+      "discount": "20% off",
+      "id": 2
+    },
+    {
+      "name": "Pedigree",
+      "price": "₹280",
+      "desc": "Dog Red Meat Biscuits (1.2 kg food)",
+      "img": "https://i5.peapod.com/c/5B/5B1LS.png",
+      "discount": "none",
+      "id": 4
+    },
+    {
+      "name": "Catnip",
+      "price": "₹500",
+      "desc": "Stick and Feathers for Cats",
+      "img": "https://cdn.shopify.com/s/files/1/0312/8826/2795/products/1_c9ec2174-3319-4caf-86c5-af9046f2ccef.png?v=1583149340",
+      "discount": "10% off",
+      "id": 5
+    },
+    {
+      "name": "Rope Ball",
+      "price": "₹135",
+      "desc": "Toy for pets made with rope for Cats and Dogs both.",
+      "img": "https://cdn.shopify.com/s/files/1/0312/8826/2795/products/1_5c13957c-f787-43cf-9925-cf281249dd18.png?v=1582269514",
+      "discount": "10% off",
+      "id": 6
+    },
+    {
+      "name": "Elite Dog House",
+      "price": "₹3500",
+      "desc": "Outdoor Cotton Iron Mix Dog House ",
+      "img": "https://rukminim1.flixcart.com/image/416/416/kqwobrk0/pet-house/q/x/e/a-1-govinda-elite-original-imag4sp2ezfhnnxc.jpeg?q=70",
+      "discount": "25% off",
+      "id": 7
+    },
+    {
+      "name": "Pet Bed",
+      "price": "₹499",
+      "desc": "Comfortable Fabric Pet Bed (Cat and Dog)",
+      "img": "https://rukminim1.flixcart.com/image/416/416/k2z1t3k0/pet-bed/5/h/h/l-54-cream-with-brown-r-k-products-original-imafm6pyjpcqyjan.jpeg?q=70",
+      "discount": "5% off",
+      "id": 8
+    }
+  ],
+  "filtermenus": {
+    "treats": [
+      {
+        "name": "Whiskas"
+      },
+      {
+        "name": "Meao"
+      },
+      {
+        "name": "Lunar"
+      },
+      {
+        "name": "Pedigree"
+      }
+    ],
+    "camps": [
+      {
+        "name": "Pet Bed"
+      },
+      {
+        "name": "Pet Camp"
+      },
+      {
+        "name": "Cat House"
+      },
+      {
+        "name": "Dog House"
+      },
+      {
+        "name": "Cat Scratch foam"
+      }
+    ],
+    "toys": [
+      {
+        "name": "Catnip"
+      },
+      {
+        "name": "Ball"
+      },
+      {
+        "name": "Cat Teaser"
+      },
+      {
+        "name": "Dog Bone"
+      }
+    ]
+  }
+}
