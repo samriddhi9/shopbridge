@@ -28,7 +28,8 @@
                                 Treats <i class="fa fa-angle-down"></i>
                             </div>
                             <ul id="treats" class="common-ul mt-3">
-                                <li *ngFor="let t of treats;" (click)="getProducts();ProductFound=1;searchText='';atwhatpage= 1">
+                                <li *ngFor="let t of treats;"
+                                    (click)="getProducts();ProductFound=1;searchText='';atwhatpage= 1">
                                     <input type="checkbox" id="{{t.name}}" [(ngModel)]="t.checked">
                                     <label for="{{t.name}}" class="ml-3"> {{t.name}} </label>
                                 </li>
@@ -40,7 +41,8 @@
                             <div class="tents-menu filterMenu">Tents & Beds <i class="fa fa-angle-down"></i></div>
 
                             <ul id="tents" class="common-ul mt-3">
-                                <li *ngFor="let c of tents;" (click)="getProducts();ProductFound=1;searchText='';atwhatpage= 1">
+                                <li *ngFor="let c of tents;"
+                                    (click)="getProducts();ProductFound=1;searchText='';atwhatpage= 1">
                                     <input type="checkbox" id="{{c.name}}" [(ngModel)]="c.checked">
                                     <label for="{{c.name}}" class="ml-3"> {{c.name}} </label>
                                 </li>
@@ -52,7 +54,8 @@
                             <div class="toys-menu filterMenu">Toys<i class="fa fa-angle-down ml-1"></i></div>
 
                             <ul id="toys" class="common-ul mt-3">
-                                <li *ngFor="let t of toys;" (click)="getProducts();ProductFound=1;searchText='';atwhatpage= 1">
+                                <li *ngFor="let t of toys;"
+                                    (click)="getProducts();ProductFound=1;searchText='';atwhatpage= 1">
                                     <input type="checkbox" id="{{t.name}}" [(ngModel)]="t.checked">
                                     <label for="{{t.name}}" class="ml-3"> {{t.name}} </label>
                                 </li>
@@ -110,15 +113,15 @@
 
                 <div class="pagination d-flex mt-4" *ngIf="ProductFound===1">
                     <div class="paginator">
-                       <button type="button" class="btn btn-primary paginatebtn ml-3" *ngFor="let p of pagenumbers"
-                       (click)="paginate(productslist,6,p)">{{p}}</button>
+                        <button type="button" class="btn btn-primary paginatebtn ml-3" *ngFor="let p of pagenumbers"
+                            (click)="paginate(productslist,6,p)">{{p}}</button>
                     </div>
                 </div>
 
                 <div class="searchpagination d-flex mt-4" *ngIf="ProductFound===2">
                     <div class="searchpaginator">
                         <button type="button" class="btn btn-danger paginatebtn ml-3" *ngFor="let p of pagenumbers"
-                        (click)="paginate(filteredlist,6,p)">{{p}}</button>
+                            (click)="paginate(filteredlist,6,p)">{{p}}</button>
                     </div>
                 </div>
 
@@ -238,7 +241,8 @@
                         <p class="d-flex forminput" [ngClass]="{'has-danger': img.invalid && (img.dirty || img.touched),
                         'has-success': img.valid && (img.dirty || img.touched) }">
                             <label for="img">Image URL :</label>
-                            <input type="url" id="img" name="img" ngModel #img="ngModel" placeholder="Enter Image URL" required>
+                            <input type="url" id="img" name="img" ngModel #img="ngModel" placeholder="Enter Image URL"
+                                required>
                         </p>
                         <div class="alert alert-danger" *ngIf="img.errors && (img.dirty || img.touched)">
                             <p *ngIf="img.errors?.required">URL is required</p>

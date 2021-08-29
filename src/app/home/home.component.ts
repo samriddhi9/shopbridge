@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
   public searchText: any;
   public urlpattern: any = ``
   public atwhatpage: any = 1;
-  public result:any =[]
+  public result: any = []
   @ViewChild('addeditModal') addeditModal: ElementRef;
   @ViewChild('deleteModal') deleteModal: ElementRef;
 
@@ -184,7 +184,7 @@ export class HomeComponent implements OnInit {
   }
 
   applyfilters(treats: any, tents: any, toys: any) {
-    debugger
+
     this.options = [];
     treats.forEach((element: any) => {
       if (element.checked) {
@@ -206,30 +206,30 @@ export class HomeComponent implements OnInit {
   }
 
   searchProductss(options: any) {
-    debugger
+
     let resArr: Products[] = [];
-    this.filteredlist =  [];
+    this.filteredlist = [];
     this.pagenumbers = []
 
     options.forEach((element: any) => {
       this.result = this.productslist.filter(s => (s.name.toLowerCase().includes(element.toLowerCase())) ||
         (s.price.toLowerCase().includes(element.toLowerCase())) || (s.desc.toLowerCase().includes(element.toLowerCase())));
-    
-        resArr.push(this.result)
+
+      resArr.push(this.result)
     });
 
-    if(resArr){
-      resArr.forEach((i:any)=>{
-        i.forEach((j:any) => {
-         //tempArr.push(j)
-         this.filteredlist.push(j)
+    if (resArr) {
+      resArr.forEach((i: any) => {
+        i.forEach((j: any) => {
+          //tempArr.push(j)
+          this.filteredlist.push(j)
         });
       })
       // console.log(tempArr);
       // var idArr = tempArr.map(function(item){ return item.id });
       // console.log(idArr);
     }
-    else{
+    else {
       this.filteredlist = []
     }
 
