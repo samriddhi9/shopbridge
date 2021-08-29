@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.3.
 a. Run `npm install` in the projects' location
-b. Install json-server in the location `PS D:\ShopBridge\jsonapi>` with the command `npm install json-server --save`  
+b. Install json-server in the location `ShopBridge\jsonapi>` with the command `npm install json-server --save`  
 
 ## Development server
 
