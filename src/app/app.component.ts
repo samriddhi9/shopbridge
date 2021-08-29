@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit {
   
-  constructor(public translate: TranslateService) { 
+  constructor() { 
   }
 
   ngOnInit() {
