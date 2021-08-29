@@ -90,10 +90,8 @@ button , .filterMenu , .common-ul li>input , .common-ul li>label , i{
     justify-content: space-between;
 }
 .description{
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 240px;
-    overflow: hidden;
+    position: relative;
+    display: inline-block;
 }
 .filterMenu {
     color: blue;
@@ -113,6 +111,46 @@ button , .filterMenu , .common-ul li>input , .common-ul li>label , i{
 .paginateBtn{
     width: 20px;
     height: 20px;
+}
+
+
+  
+  /* Tooltip text */
+  .description .tooltiptext {
+    visibility: hidden;
+    width: 150px;
+    background-color: lightgoldenrodyellow;
+    color: blue;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    font-size: 12px;
+   
+    position: absolute;
+    z-index: 1;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .description:hover .tooltiptext {
+    visibility: visible;
+    left: 0px;
+    bottom: 22px;
+  }
+  .discount-label{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 30px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 5px;
+    background-color: dodgerblue;
+    text-align: center;
+    font-weight: bolder;
+    color: white;
+  }
+  .description span{
+    font-size: 13.5px !important;
 }
 
 /* //media queries  */
@@ -145,6 +183,10 @@ button , .filterMenu , .common-ul li>input , .common-ul li>label , i{
     h4{
         font-size: 17px;
     }
+   .discount-label{
+       height: 20px;
+       font-size: 12px;
+   }
 }
 @media  screen and (max-width: 768px) {
     .column {
